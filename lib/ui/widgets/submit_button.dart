@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../gen/colors.gen.dart';
 import '../../styleguide/dimensions.dart';
@@ -102,7 +103,10 @@ class _SubmitButtonState extends State<SubmitButton>
           //     : null,
         ),
         child: showLoader
-            ? AirplaneLoader()
+            ? SpinKitCircle(
+          color: Colors.white,
+          size: 25.0 - widget.padding / 2.5,
+        )
             : Row(
           mainAxisSize: MainAxisSize.min,
           children: [

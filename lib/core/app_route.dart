@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../ui/screens/auth/login_screen.dart';
+import '../ui/screens/auth/signup_screen.dart';
+import '../ui/screens/dashBoard/dashboard_screen.dart';
 import '../ui/screens/splash/splash_screen.dart';
 
 
@@ -10,6 +13,12 @@ class Routes {
     switch (uri.path) {
       case SplashScreen.path:
         return pageRoute(settings, const SplashScreen());
+      case SignupScreen.path:
+        return pageRoute(settings, const SignupScreen());
+      case LoginScreen.path:
+        return pageRoute(settings, const LoginScreen());
+      case DashboardScreen.path:
+        return pageRoute(settings, const DashboardScreen());
       default:
         return pageRoute(
             settings,

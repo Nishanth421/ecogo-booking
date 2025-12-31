@@ -1,4 +1,5 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
@@ -8,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 import '../firebase_options.dart';
+import '../helper/shared_preperence_helper.dart';
 import '../main.dart';
 
 abstract class Env {
@@ -29,9 +31,10 @@ abstract class Env {
     });
     GoogleFonts.config.allowRuntimeFetching = false;
 
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    FirebaseAuth.instance.setLanguageCode('en');
+    SharedPrefService.instance.init();
     runApp(MyApp(
       env: this,
     ));
