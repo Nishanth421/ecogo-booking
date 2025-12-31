@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "128272551036",
+    "project_id": "ecogo-booking",
+    "storage_bucket": "ecogo-booking.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128272551036:android:665a0c9bd7b564725ecdf9",
+        "android_client_info": {
+          "package_name": "com.example.ecogo_booking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYG6LpsqHa5cj2-lQ_HDKAWtvkzeFng5c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

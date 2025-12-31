@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#EEEEF1</color>
+    <color name="black">#323232</color>
+    <color name="border">#E9E9E9</color>
+    <color name="p">#5F5F5F</color>
+    <color name="primary">#076D0B</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="darkPrimary">#014B25</color>
+    <color name="black1">#1F1F1F</color>
+    <color name="dropdownIconColor">#D1D1D5</color>
+    <color name="errorColor">#FFA4A4</color>
+</resources>

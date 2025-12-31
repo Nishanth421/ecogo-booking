@@ -1,0 +1,130 @@
+
+import 'package:flutter/material.dart';
+
+import '../../gen/colors.gen.dart';
+import '../../styleguide/dimensions.dart';
+import '../../styleguide/typography.dart';
+import 'custom_loader/custom_loader.dart';
+
+class SubmitButton extends StatefulWidget {
+  SubmitButton(
+      this.title, {
+        Key? key,
+        this.onTap,
+        this.padding = 9,
+        this.backgroundColor = ColorName.primary,
+        this.textColor = Colors.white,
+        this.overlayColor = Colors.white,
+        this.textStyle,
+        this.borderColor,
+        this.radius,
+        this.suffix,
+        this.hasGradient = true,
+        this.disabled = false
+      }) : super(key: key);
+
+  SubmitButton.primary(
+      this.title, {
+        Key? key,
+        this.onTap,
+        this.padding = 14,
+        this.backgroundColor = ColorName.primary,
+        this.textColor = Colors.white,
+        this.overlayColor = Colors.white,
+        this.textStyle,
+        this.borderColor,
+        this.radius,
+        this.suffix,
+        this.hasGradient = true,
+        this.disabled = false,
+      }) : super(key: key);
+
+  SubmitButton.delete({
+    this.title = 'Delete Post',
+    Key? key,
+    this.onTap,
+    this.padding = 9,
+    this.backgroundColor = ColorName.border,
+    this.overlayColor = Colors.red,
+    this.textStyle,
+    this.textColor = Colors.red,
+    this.borderColor,
+    this.radius,
+    this.suffix,
+    this.hasGradient = true,
+    this.disabled = false
+  }) : super(key: key);
+
+  final LoadingChanged<VoidCallback>? onTap;
+  final String title;
+  final double padding;
+  final Color? textColor;
+  final Color? borderColor;
+  final BorderRadius? radius;
+  final Widget? suffix;
+  final Color backgroundColor;
+  final Color overlayColor;
+  final TextStyle? textStyle;
+  final bool? hasGradient;
+  final bool disabled;
+
+  @override
+  State<SubmitButton> createState() => _SubmitButtonState();
+}
+
+class _SubmitButtonState extends State<SubmitButton>
+    with TickerProviderStateMixin {
+  bool showLoader = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: widget.onTap == null
+          ? null
+          : () => widget.onTap!(() {
+        setState(() {
+          showLoader = !showLoader;
+        });
+      }),
+      child: Container(
+        // padding: EdgeInsets.symmetric(vertical:9),
+        height: 36,
+        decoration: BoxDecoration(
+          color: widget.disabled?ColorName.dropdownIconColor:widget.backgroundColor,
+          borderRadius: BorderRadius.circular(100),
+          // gradient: widget.hasGradient == true
+          //     ? const LinearGradient(
+          //         colors: [
+          //           ColorName.gradientButtonStart,
+          //           ColorName.gradientButtonEnd
+          //         ],
+          //       )
+          //     : null,
+        ),
+        child: showLoader
+            ? AirplaneLoader()
+            : Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (widget.suffix != null) ...[widget.suffix!, gap],
+            Expanded(
+              child: Text(
+                widget.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+
+                style: (widget.textStyle ?? button).copyWith(
+                  color: widget.textColor,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+typedef LoadingChanged<T> = void Function(T loaderSwitch);
