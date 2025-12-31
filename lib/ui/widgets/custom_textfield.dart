@@ -17,7 +17,7 @@ class CustomTextField extends TextField {
         int? minLine,
         int? maxLine,
         Widget? prefix,
-        List<TextInputFormatter>? inputFormatters,ValueChanged<String>? onChanged}) {
+        List<TextInputFormatter>? inputFormatters,ValueChanged<String>? onChanged,bool enable = true}) {
     return TextField(
       controller: controller,
       onChanged:onChanged,
@@ -25,6 +25,7 @@ class CustomTextField extends TextField {
       keyboardType: keyboardType ?? TextInputType.name,
       minLines: minLine,
       maxLines: maxLine,
+      enabled: enable,
       style: placeholder.w400.copyWith(color: ColorName.black),
       inputFormatters:inputFormatters,
       decoration: InputDecoration(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../ui/screens/auth/login_screen.dart';
 import '../ui/screens/auth/signup_screen.dart';
 import '../ui/screens/dashBoard/dashboard_screen.dart';
+import '../ui/screens/search/search_screen.dart';
 import '../ui/screens/splash/splash_screen.dart';
 
 
@@ -19,6 +20,9 @@ class Routes {
         return pageRoute(settings, const LoginScreen());
       case DashboardScreen.path:
         return pageRoute(settings, const DashboardScreen());
+      case SearchScreen.path:
+        String tuiId = settings.arguments as String;
+        return pageRoute(settings, SearchScreen(tuiId: tuiId,));
       default:
         return pageRoute(
             settings,

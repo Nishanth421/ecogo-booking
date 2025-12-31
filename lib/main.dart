@@ -19,7 +19,7 @@ getEnvironment() {
   // default production environment will be loaded.
   const environment = int.fromEnvironment(
     'ENVIRONMENT_TYPE',
-    defaultValue: 2,
+    defaultValue: 0,
   );
 
   switch (EnvironmentType.values[environment]) {

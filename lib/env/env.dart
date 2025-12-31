@@ -8,14 +8,13 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
-import '../firebase_options.dart';
+
 import '../helper/shared_preperence_helper.dart';
 import '../main.dart';
 
 abstract class Env {
   final String domainUrl;
   static late Env instance;
-  String? signature = "3GUT6hx@nYQe8SpAAKwzxx3K!cfQLQe=";
 
   Env({
     required this.domainUrl,

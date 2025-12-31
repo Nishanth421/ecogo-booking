@@ -7,15 +7,6 @@ import '../ui/widgets/custom_snakbar.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Sign Up
-  // Future<User?> signUp(String email, String password) async {
-  //   final userCredential = await _auth.createUserWithEmailAndPassword(
-  //     email: email,
-  //     password: password,
-  //   );
-  //   return userCredential.user;
-  // }
-
   Future<User?> signUp(String email, String password) async {
     try {
       final userCredential = await FirebaseAuth.instance
