@@ -1,12 +1,8 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:ecogo_booking/ui/screens/search/search_screen.dart';
-import 'package:flutter/material.dart';
-
-import '../../core/app_constants.dart';
-import '../../data/models/post_search_response.dart';
 import '../../data/models/search_response_model.dart';
 import '../../data/repository_impl/dashboard_repo_impl.dart';
+import '../widgets/custom_snakbar.dart';
 
 class DashboardBloc{
 
@@ -28,14 +24,13 @@ class DashboardBloc{
   Future<bool> postSearchFlight({required String tuiId,required String date})async {
     try{
       var response = await dashboardRepo.postSearchFlight(tuiId: tuiId,date: date);
-      print("ppppppp==>${response}");
       if(response?.status.success == true){
         return true;
       }else{
         return false;
       }
     } catch(e){
-      print("erorr==>${e}");
+      SnackBarCustom.failure(e.toString());
       return false;
     }
   }
@@ -46,14 +41,24 @@ class DashboardBloc{
       if(response?.searchResult?.tripInfos?.onward?.isNotEmpty == true){
         flightList = response!.searchResult!.tripInfos!.onward!;
         filteredFlightList = List.from(flightList);
-        _searchController.add(filteredFlightList);
+        flightFilter(type: "Recommended");
       }
-      print("ppppppp==>${response}");
     } catch(e){
-      print("erorr==>${e}");
+      _searchController.sink.addError(e);
     }
   }
 
+   void flightFilter({required String type}){
+    switch(type){
+      case "Recommended":
+        return filterRecommended();
+      case "Cheapest":
+        return filterCheapest();
+      case "Fastest":
+        return filterFastest();
+
+    }
+   }
   void filterCheapest() {
     filteredFlightList.sort((a, b) {
       final priceA = a?.totalPriceList![0]
@@ -93,5 +98,26 @@ class DashboardBloc{
     });
 
     _searchController.add(filteredFlightList);
+  }
+
+  bool validation({
+    required String from,
+    required String to,
+    required String date,
+  }) {
+    if (from.trim().isEmpty) {
+      SnackBarCustom.failure("Enter From");
+      return false;
+    }
+
+    if (to.trim().isEmpty) {
+      SnackBarCustom.failure("Enter To");
+      return false;
+    }
+    if (date.trim().isEmpty) {
+      SnackBarCustom.failure("Choose date");
+      return false;
+    }
+    return true;
   }
 }

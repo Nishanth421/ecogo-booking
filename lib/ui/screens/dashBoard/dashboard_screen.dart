@@ -102,19 +102,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
           SubmitButton(
             "Search Flights",
             onTap: (loader) async {
-              loader();
-              String randomTuiId = _bloc.generateRandomString(7);
-              print("id===>${randomTuiId}");
-            var response = await _bloc.postSearchFlight(tuiId: randomTuiId,date: _dateController.text);
-            if(response == true){
-              Future.delayed(Duration(seconds:15 ),(){
+              if(_bloc.validation(from: _fromController.text, to: _toController.text, date: _dateController.text)) {
                 loader();
-                Navigator.pushNamed(context, SearchScreen.path,
-                    arguments: randomTuiId);
-              });
-            }else{
-              loader();
-            }
+                String randomTuiId = _bloc.generateRandomString(7);
+                var response = await _bloc.postSearchFlight(
+                    tuiId: randomTuiId, date: _dateController.text);
+                if (response == true) {
+                  Future.delayed(Duration(seconds: 15), () {
+                    loader();
+                    Navigator.pushNamed(context, SearchScreen.path,
+                        arguments: randomTuiId);
+                  });
+                } else {
+                  loader();
+                }
+              }
             },
           ),
           Gap(25),
