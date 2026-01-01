@@ -26,6 +26,9 @@ class ColorName {
   /// Color: #E9E9E9
   static const Color border = Color(0xFFE9E9E9);
 
+  /// Color: #080c40
+  static const Color darkBlue = Color(0xFF080C40);
+
   /// Color: #014B25
   static const Color darkPrimary = Color(0xFF014B25);
 

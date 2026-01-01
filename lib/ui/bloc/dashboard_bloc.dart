@@ -21,6 +21,26 @@ class DashboardBloc{
         .join();
   }
 
+    String timeFormat({required String? time}){
+      DateTime dateTime = DateTime.parse(time??"");
+    return "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+    }
+
+  String dateFormat({required String? date}){
+    const List<String> months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    DateTime dateTime = DateTime.parse(date??"");
+    return "${dateTime.day.toString().padLeft(2, '0')} ${months[dateTime.month - 1]}";
+  }
+
+  String durationFormat({required int duration}){
+    int hours = duration ~/ 60;
+    int minutes = duration % 60;
+    return "${hours.toString().padLeft(2, '0')}h ${minutes.toString().padLeft(2, '0')}m";
+  }
+
   Future<bool> postSearchFlight({required String tuiId,required String date})async {
     try{
       var response = await dashboardRepo.postSearchFlight(tuiId: tuiId,date: date);
@@ -41,7 +61,12 @@ class DashboardBloc{
       if(response?.searchResult?.tripInfos?.onward?.isNotEmpty == true){
         flightList = response!.searchResult!.tripInfos!.onward!;
         filteredFlightList = List.from(flightList);
-        flightFilter(type: "Recommended");
+        if(filteredFlightList.isEmpty){
+          _searchController.add([]);
+        }else{
+          flightFilter(type: "Recommended");
+        }
+
       }
     } catch(e){
       _searchController.sink.addError(e);

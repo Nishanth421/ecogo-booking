@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../gen/colors.gen.dart';
+
 class TripTypeSelector extends StatefulWidget {
   @override
   _TripTypeSelectorState createState() => _TripTypeSelectorState();
@@ -27,12 +29,11 @@ class _TripTypeSelectorState extends State<TripTypeSelector> {
                   setState(() {
                     selectedType = type;
                   });
-                  // Optional: notify parent or bloc
-                  // _bloc.updateTripType(type);
                 }
               },
-              selectedColor: Colors.blue,
-              backgroundColor: Colors.grey[200],
+              selectedColor: ColorName.darkBlue,
+              backgroundColor: ColorName.background,
+              checkmarkColor: ColorName.white,
               labelStyle: TextStyle(
                 color: isSelected ? Colors.white : Colors.black,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,

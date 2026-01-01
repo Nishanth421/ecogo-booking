@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gap/gap.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../data/models/search_response_model.dart';
+import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../styleguide/typography.dart';
 import '../../bloc/dashboard_bloc.dart';
@@ -46,11 +46,150 @@ class _SearchScreenState extends State<SearchScreen> {
     return Column(
       children: [
         Container(
-          child: Text(data?.segmentInformation?.first.flightDesignator?.mac?.name?.toString()??""),
+          width: MediaQuery.of(context).size.width,
+          decoration:  BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: ColorName.white,
+          ),
+          padding: EdgeInsets.all(15),
+          margin: EdgeInsets.only(bottom: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Assets.svgs.icFlight.svg(height: 20,color:ColorName.darkBlue),
+                  Gap(10),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(data?.segmentInformation?.first.flightDesignator?.mac?.name?.toString()??"",
+                      style: h6),
+                      Text(
+                        "${data?.segmentInformation?.first.flightDesignator?.mac?.code ?? ""}"
+                            " - "
+                            "${data?.segmentInformation?.first.flightDesignator?.flightNumber ?? ""}",
+                      style: h6,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Gap(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(_bloc.timeFormat(time: data?.segmentInformation?.first.arrivalTime?.toString()??""),
+                          style: placeholder),
+                      Text(_bloc.dateFormat(date: data?.segmentInformation?.first.arrivalTime?.toString()??""),
+                          style: h6),
+
+                      Text(data?.segmentInformation?.first.arrivalAirport?.cityCode?.toString()??"",
+                          style: h6),
+                    ],
+                  ),
+                  Gap(10),
+                  Expanded(
+                    child:LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              _bloc.durationFormat(
+                                duration: data?.segmentInformation?.first.duration ?? 0,
+                              ),
+                              style: h6,
+                            ),
+
+                            Row(
+                              children: [
+                                CircleAvatar(radius: 5, backgroundColor: ColorName.darkPrimary),
+                                Expanded(
+                                  child: Container(
+                                    height: 1,
+                                    color: ColorName.background,
+                                    margin: const EdgeInsets.symmetric(horizontal: 6),
+                                  ),
+                                ),
+                                CircleAvatar(radius: 5, backgroundColor: ColorName.darkPrimary),
+                              ],
+                            ),
+                            Text(
+                              data?.segmentInformation?.first.stops == 0
+                                  ? "Non-stop"
+                                  : "${data?.segmentInformation?.first.stops} Stops",
+                              style: h6,
+                            ),
+                          ],
+                        );
+                      }
+                    ),
+                  ),
+                  Gap(10),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(_bloc.timeFormat(time: data?.segmentInformation?.first.departureTime?.toString()??""),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: placeholder),
+                      Text(_bloc.dateFormat(date: data?.segmentInformation?.first.departureTime?.toString()??""),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: h6),
+                      Text(data?.segmentInformation?.first.departureAirport?.cityCode?.toString()??"",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: h6),
+                    ],
+                  ),
+                ],
+              ),
+              Gap(10),
+              Divider(
+                color: ColorName.background,
+              ),
+              Gap(10),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text("Flight Details",
+                        style: h6.w400.copyWith(color: ColorName.darkPrimary)),
+                  ),
+                  Text(
+                    "₹ ${data?.totalPriceList?.first.fareDetail?.adult?.fareComponents?.totalFare ?? ""}",
+                    style: h6.w400.copyWith(color: ColorName.black),
+                  ),
+                  Gap(5),
+                  Container(
+                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5)),
+                    color: ColorName.darkBlue),
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    child: Center(
+                      child: Text("Book Now",
+                          style: h6.w400.copyWith(color: ColorName.white)),
+                    ),
+                  )
+                ],
+              ),
+              Gap(10),
+            ],
+          ),
         )
       ],
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -58,6 +197,8 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: AppBar(
         title: Text("Flight results"),
         backgroundColor: ColorName.background,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -77,19 +218,25 @@ class _SearchScreenState extends State<SearchScreen> {
                 case ConnectionState.active:
                 case ConnectionState.done:
                 List<ONWARD?> data = snapshot.data ?? [];
+                print("ddd${data.length}");
                   return data.isEmpty
                       ? emptyScreenWidget()
-                      : ListView(
-                      children: [
-                        Gap(27),
-                        FilterFlights(bloc: _bloc),
-                        Gap(20),
-                        Column(
-                            children: data
-                                .map((e) => myCards(e))
-                                .toList()),
-                        Gap(40),
-                      ]);
+                      :  Column(
+                  children: [
+                    const Gap(27),
+                    FilterFlights(bloc: _bloc),
+                    const Gap(20),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return myCards(data[index]);
+                        },
+                      ),
+                    ),
+                    const Gap(40),
+                  ],
+                );
                 default:
                   return Container();
               }
@@ -133,8 +280,9 @@ class _FilterFlightsState extends State<FilterFlights> {
                   widget.bloc?.flightFilter(type:selectedType);
                 }
               },
-              selectedColor: Colors.blue,
-              backgroundColor: Colors.grey[200],
+              checkmarkColor: ColorName.white,
+              selectedColor: ColorName.darkBlue,
+              backgroundColor: ColorName.background,
               labelStyle: TextStyle(
                 color: isSelected ? Colors.white : Colors.black,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,

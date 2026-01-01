@@ -11,4 +11,5 @@
     <color name="black1">#1F1F1F</color>
     <color name="dropdownIconColor">#D1D1D5</color>
     <color name="errorColor">#FFA4A4</color>
+    <color name="darkBlue">#080c40</color>
 </resources>

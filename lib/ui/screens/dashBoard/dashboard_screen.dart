@@ -1,12 +1,12 @@
 
 import 'package:ecogo_booking/ui/screens/dashBoard/views/ticket_type_selector_view.dart';
+import 'package:ecogo_booking/ui/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../styleguide/typography.dart';
-import '../../bloc/auth_bloc.dart';
 import '../../bloc/dashboard_bloc.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/submit_button.dart';
@@ -24,7 +24,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final TextEditingController _fromController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
-  final AuthBloc _authBloc = AuthBloc();
   final DashboardBloc _bloc = DashboardBloc();
 
   Widget _searchFieldsView(){
@@ -146,7 +145,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       height: 400,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
-        color: Colors.blue,
+        color: ColorName.darkBlue,
       ),
       padding: EdgeInsets.only(left:24,top: MediaQuery.of(context).size.height/10 ,right: 24),
       child: Column(
@@ -155,24 +154,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Row(
             children: [
-              Icon(Icons.location_on_rounded),
+              Icon(Icons.location_on_rounded,color: ColorName.white,),
               Gap(10),
-              Text("Location"),
+              Text("Location",style: placeholder.w500.copyWith(color: ColorName.white),),
               Spacer(),
               GestureDetector(
                 onTap: (){
-
+                  Navigator.pushNamed(context, ProfileScreen.path);
                 },
                 child: Icon(
                   Icons.person,
-                  color: Colors.black,
+                  color: ColorName.white,
                   size: 15,
                 ),
               ),
             ],
           ),
           Gap(10),
-          Text("Kochi, India"),
+          Text("Kochi, India",style: placeholder.w500.copyWith(color: ColorName.white),),
         ],
       ),
     );
