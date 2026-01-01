@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 
 class AppConstants {
   static String appTitle = 'Ecogo Booking';
-  static String next = 'Next';
-
-  
-
 
   static Map<String, dynamic> userAgent = {};
 
