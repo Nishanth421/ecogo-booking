@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../gen/colors.gen.dart';
+import '../../../styleguide/typography.dart';
 import '../../bloc/auth_bloc.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/submit_button.dart';
+import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   static const String path = '/signup';
@@ -24,7 +27,8 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: ColorName.white,
-        appBar: AppBar(title: Text("Signup",style: TextStyle(color: ColorName.black),),),
+        appBar: AppBar(title: Text("Signup",style: TextStyle(color: ColorName.black),),
+            automaticallyImplyLeading: false),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -49,9 +53,25 @@ class _SignupScreenState extends State<SignupScreen> {
 
                   }
                   }
-                )
-              ],
+                ),
+                Gap(50),
+            RichText(
+              text: TextSpan(
+                text: "Already have an account? ",
+                style: TextStyle(color: Colors.black, fontSize: 16),
+                children: [
+                  TextSpan(
+                    text: "Log In",
+                    style: placeholder.w500.copyWith(color:Colors.blue),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.pushReplacementNamed(context, LoginScreen.path);
+                      },
+                  ),
+                ],
+              ),
             ),
+    ])
           ),
         )
     );

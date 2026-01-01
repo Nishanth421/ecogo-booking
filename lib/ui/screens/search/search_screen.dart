@@ -218,7 +218,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 case ConnectionState.active:
                 case ConnectionState.done:
                 List<ONWARD?> data = snapshot.data ?? [];
-                print("ddd${data.length}");
                   return data.isEmpty
                       ? emptyScreenWidget()
                       :  Column(

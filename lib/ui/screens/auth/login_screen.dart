@@ -1,4 +1,7 @@
+import 'package:ecogo_booking/styleguide/typography.dart';
+import 'package:ecogo_booking/ui/screens/auth/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -24,7 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: ColorName.white,
-        appBar: AppBar(title: Text("Login",style: TextStyle(color: ColorName.black),),),
+        appBar: AppBar(title: Text("Login",style: TextStyle(color: ColorName.black),),
+            automaticallyImplyLeading: false),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -34,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                  CustomTextField.textFieldSingle(_emailController,hintText: "Email"),
                  Gap(25),
                  CustomTextField.textFieldSingle(_passwordController,hintText: "Password"),
+                 Gap(25),
                  SubmitButton(
                    "Log in",
                    onTap: (loader) async {
@@ -45,11 +50,22 @@ class _LoginScreenState extends State<LoginScreen> {
                    },
                  ),
                  Gap(50),
-                 SubmitButton(
-                     "login",
-                     onTap: (loader) async {
-                       Navigator.pushReplacementNamed(context, LoginScreen.path);
-                     })
+                 RichText(
+                   text: TextSpan(
+                     text: "Don't have an account? ",
+                     style: TextStyle(color: Colors.black, fontSize: 16),
+                     children: [
+                       TextSpan(
+                         text: "Sign Up",
+                         style: placeholder.w500.copyWith(color:Colors.blue),
+                         recognizer: TapGestureRecognizer()
+                           ..onTap = () {
+                             Navigator.pushReplacementNamed(context, SignupScreen.path);
+                           },
+                       ),
+                     ],
+                   ),
+                 ),
                ],
             ),
           ),
