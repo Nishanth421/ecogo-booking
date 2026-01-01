@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class AppConstants {
-  static String appTitle = 'Smart Chill';
+  static String appTitle = 'Ecogo Booking';
   static String next = 'Next';
 
   
