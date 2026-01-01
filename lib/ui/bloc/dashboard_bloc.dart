@@ -61,25 +61,22 @@ class DashboardBloc{
       if(response?.searchResult?.tripInfos?.onward?.isNotEmpty == true){
         flightList = response!.searchResult!.tripInfos!.onward!;
         filteredFlightList = List.from(flightList);
-        if(filteredFlightList.isEmpty){
-          _searchController.add([]);
-        }else{
-          flightFilter(type: "Recommended");
-        }
-
+          flightFilter(type: FilterTypes.Recommended);
+      }else{
+        _searchController.add([]);
       }
     } catch(e){
       _searchController.sink.addError(e);
     }
   }
 
-   void flightFilter({required String type}){
+   void flightFilter({required FilterTypes type}){
     switch(type){
-      case "Recommended":
+      case FilterTypes.Recommended:
         return filterRecommended();
-      case "Cheapest":
+      case FilterTypes.Cheapest:
         return filterCheapest();
-      case "Fastest":
+      case FilterTypes.Fastest:
         return filterFastest();
 
     }
@@ -146,3 +143,6 @@ class DashboardBloc{
     return true;
   }
 }
+
+
+enum FilterTypes{Recommended,Cheapest,Fastest}

@@ -80,7 +80,7 @@ class _SubmitButtonState extends State<SubmitButton>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap == null
+      onTap: (widget.onTap == null || showLoader || widget.disabled)
           ? null
           : () => widget.onTap!(() {
         setState(() {
@@ -88,19 +88,12 @@ class _SubmitButtonState extends State<SubmitButton>
         });
       }),
       child: Container(
-        // padding: EdgeInsets.symmetric(vertical:9),
         height: 36,
         decoration: BoxDecoration(
-          color: widget.disabled?ColorName.dropdownIconColor:widget.backgroundColor,
+          color: widget.disabled
+              ? ColorName.dropdownIconColor
+              : widget.backgroundColor,
           borderRadius: BorderRadius.circular(100),
-          // gradient: widget.hasGradient == true
-          //     ? const LinearGradient(
-          //         colors: [
-          //           ColorName.gradientButtonStart,
-          //           ColorName.gradientButtonEnd
-          //         ],
-          //       )
-          //     : null,
         ),
         child: showLoader
             ? SpinKitCircle(
@@ -117,7 +110,6 @@ class _SubmitButtonState extends State<SubmitButton>
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
-
                 style: (widget.textStyle ?? button).copyWith(
                   color: widget.textColor,
                 ),

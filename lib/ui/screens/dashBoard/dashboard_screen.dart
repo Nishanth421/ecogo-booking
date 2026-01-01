@@ -214,8 +214,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       children: [
                         Gap(MediaQuery.of(context).size.height/4),
                         _searchFieldsView(),
-                        const Gap(50),
-
+                        const Gap(30),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Assets.images.a7813403.image(
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Gap(50),
                       ],
                     ),
                   ),
